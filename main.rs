@@ -1,20 +1,25 @@
 use dioxus::html::input_data::keyboard_types::{Key, Modifiers};
 use dioxus::prelude::*;
-use dioxus::desktop::Config;
+use dioxus::desktop::{Config, WindowBuilder};
+use dioxus::signals::*;
+use dioxus::desktop::tao::dpi::LogicalSize;
 
 fn main() {
-    let cfg: Config;
-    cfg = dioxus::desktop::Config::new().with_menu(None);
-    
-    
-    
-    LaunchBuilder::desktop().with_cfg(cfg).launch(App);
+        LaunchBuilder::desktop()
+        .with_cfg(
+            Config::new().with_menu(None).with_window(
+                WindowBuilder::new()
+                    .with_title("Современная образовательная виртуальная академия")
+                    .with_resizable(false)
+                    .with_inner_size(LogicalSize::new(1020.0, 730.0)),
+                ),
+            ).launch(App);
 }
 // The #[component] attribute streamlines component creation.
 // It's not required, but highly recommended. For example, UpperCamelCase components will not generate a warning.
 #[component]
 fn App() -> Element {
-    let mut disabled = use_signal(|| false);
+    let mut exitApp = use_signal(|| 0);
     rsx!{
         body {
             section { class: "flex items-center justify-center min-h-screen bg-gray-50",
@@ -53,12 +58,10 @@ fn App() -> Element {
                         }
                         button { class: "py-2 text-white duration-300 bg-green-600 rounded-xl hover:scale-105",
                             "Войти"
-                            
                         }
                         button { class: "py-2 text-white duration-300 bg-green-600 rounded-xl hover:scale-105",
                             "Закрыть"
-                            //button { onclick: move |event| log::info!("Clicked! Event: {event:?}"), "click me!" }
-                            button { onclick: move |event |   }
+                           //button { onclick: move |event |  }
                         }
                     }
                 }
@@ -90,4 +93,9 @@ fn PopUp(message: String) -> Element{
             }
         }
     }
+}
+#component
+fn saveApp()
+{
+
 }
